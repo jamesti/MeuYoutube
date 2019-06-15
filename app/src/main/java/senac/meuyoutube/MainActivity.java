@@ -1,13 +1,21 @@
 package senac.meuyoutube;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.RadioButton;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,8 +30,36 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                try {
+                    RadioButton culinaria = findViewById(R.id.rbCulinaria);
+                    RadioButton animais = findViewById(R.id.rbAnimais);
+                    RadioButton tecnologia = findViewById(R.id.rbTecnologia);
+                    RadioButton beleza = findViewById(R.id.rbBeleza);
+                    RadioButton esporte = findViewById(R.id.rbEsporte);
+                    WebView youtube = findViewById(R.id.viewYoutube);
+                    String videoID = "";
+
+                    if (culinaria.isChecked()){
+                        videoID = "yfKhiFXv8qs";
+                    } else if (animais.isChecked()){
+                        videoID = "IsJ3F2JWmeE";
+                    } else if (tecnologia.isChecked()){
+                        videoID = "9Pa-q2ydmSc";
+                    } else if (beleza.isChecked()){
+                        videoID = "YdSvO830QHE";
+                    } else {
+                        videoID = "znhVNUJB9MQ";
+                    }
+
+                    youtube.getSettings().setJavaScriptEnabled(true);
+                    youtube.getSettings().setPluginState(WebSettings.PluginState.ON);
+                    youtube.loadUrl("https://www.youtube.com/embed/" + videoID + "?autoplay=1&vq=small");
+                    youtube.setWebChromeClient(new WebChromeClient());
+                } catch (Exception ex){
+                    Log.e("onClick fab", ex.getMessage());
+                    Toast.makeText(getApplicationContext(), "Houve um erro..",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -33,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-
     }
 
     @Override
