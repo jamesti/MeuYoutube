@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         videoID = "znhVNUJB9MQ";
                     }
 
+
                     youtube.getSettings().setJavaScriptEnabled(true);
                     youtube.getSettings().setPluginState(WebSettings.PluginState.ON);
                     youtube.loadUrl("https://www.youtube.com/embed/" + videoID + "?autoplay=1&vq=small");
